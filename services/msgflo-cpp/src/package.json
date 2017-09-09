@@ -1,0 +1,28 @@
+{
+  "name": "msgflo-cpp",
+  "description": "C++ participant support for MsgFlo",
+  "version": "0.0.6",
+  "author": {
+    "name": "Jon Nordby",
+    "email": "jononor@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/msgflo/msgflo-cpp.git"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "amqplib": "^0.5.1",
+    "chai": "~3.5.0",
+    "coffee-script": "^1.8.0",
+    "mocha": "~3.4.2",
+    "msgflo": "^0.10.0",
+    "mqtt": "~2.7.2"
+  },
+  "keywords": [],
+  "bin": {},
+  "scripts": {
+    "test": "mocha --reporter spec --compilers coffee:coffee-script/register spec/*.coffee"
+  }
+}
