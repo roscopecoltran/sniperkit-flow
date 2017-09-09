@@ -1,0 +1,18 @@
+{
+  "id": "77dab510-44d7-44f9-a502-df667537a0d6",
+  "user": "67ccea11-bfd7-420a-9d5d-56ba45e25ec7",
+  "host": "autodetect",
+  "port": 3569,
+  "label": "showContents-new",
+  "secret": "\"4AIbOlr",
+  "permissions": {
+    "\"4AIbOlr": [
+      "protocol:component",
+      "protocol:runtime",
+      "protocol:graph",
+      "protocol:network",
+      "component:getsource",
+      "component:setsource"
+    ]
+  }
+}
