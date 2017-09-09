@@ -60,10 +60,10 @@ services:
     image: node-red:latest-alpine3.6
     container_name: node-red
     build:
-      context: services/goflow-draw
-      dockerfile: goflow-ui.alpine.dockerfile
+      context: services/node-red-ui
+      dockerfile: node-red-ui.alpine.dockerfile
     env_file:
-    - "./services/goflow-draw/goflow-ui.alpine.env"
+    - "./services/node-red-ui/node-red-ui.alpine.env"
     extra_hosts:
     - "dockerhost:$DOCKERHOST"
     networks:
@@ -80,6 +80,29 @@ services:
     extra_hosts:
     - "dockerhost:$DOCKERHOST"
 
+  noflow_graph_server:
+    image: noflo-graph-server:latest-alpine3.6
+    container_name: noflo-graph-server
+    build:
+      context: services/noflo-server-graph
+      dockerfile: noflo-server-graph.alpine.dockerfile
+    env_file:
+    - "./services/noflo-server-graph/noflo-server-graph.alpine.env"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+    networks:
+    - fbp
+    volumes:
+    - data:/shared/data
+    - data:/shared/logs
+    - data:/shared/www
+    - data:/shared/conf.d
+    ports:
+    # - "80:80"
+    # - "443:443"
+    - "2015:2015"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
 
 volumes:
   data: 

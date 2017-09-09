@@ -1,7 +1,7 @@
 ## snippets ############################################################################################################
 ##
-## 1. docker build -t ryanpeach-goflow-ui --no-cache -f goflow-ui.alpine.dockerfile .
-## 2. docker run --rm -p 80:80 -p 443:443 -p 2015:2015 ryanpeach-goflow-ui
+## 1. docker build -t ryanpeach-goflow-draw --no-cache -f goflow-draw.alpine.dockerfile .
+## 2. docker run --rm -p 80:80 -p 443:443 -p 2015:2015 ryanpeach-goflow-draw
 ##
 ########################################################################################################################
 
@@ -9,22 +9,38 @@
 FROM alpine:3.6
 LABEL maintainer "Michalski Luc <michalski.luc@gmail.com>"
 
+EXPOSE 80 443 2015
+
+## with GOSU
+# ENTRYPOINT ["/usr/local/sbin/gosu"]
+# CMD ["app", "/app/node-red-ui"]
+
+## with TINI
+# ENTRYPOINT ["/sbin/tini"]
+# CMD [ "--", "/usr/bin/entrypoint.sh"]
+
+CMD ["/usr/bin/noflo-nodejs"]
+
 ## container - info
 ARG CONTAINER_OS=${CONTAINER_OS:-"linux"}
 ARG CONTAINER_ARCH=${CONTAINER_ARCH:-"amd64"}
 
 ## caddy - features
-ARG CADDY_FEATURES=${CADDY_FEATURES:-"git"}
+ARG CADDY_FEATURES=${CADDY_FEATURES:-""}
 # ARG CADDY_FEATURES=${CADDY_FEATURES:-"hook.service,http.awslambda,http.cache,http.cors,http.expires,http.git,http.gopkg,http.grpc,http.ipfilter,http.jwt,http.nobots,http.ratelimit,http.realip,http.reauth,net,tls.dns.cloudflare,tls.dns.digitalocean,tls.dns.gandi,tls.dns.googlecloud,tls.dns.linode,tls.dns.ovh,tls.dns.rackspace"}
 
 ## alpine - apk
-ARG APK_PACKAGES=${APK_PACKAGES:-"git"}
-ARG APK_BUILD=${APK_BUILD:-"libcap curl wget tar gzip unzip libmagic"}
-ARG APK_RUNTIME=${APK_RUNTIME:-"git su-exec tini"}
-ARG APK_INTERACTIVE=${APK_INTERACTIVE:-"nano bash tree jq htop"}
+ARG APK_BUILD=${APK_BUILD:-"libcap curl wget tar gzip unzip libwebsockets-dev libmagic"}
+ARG APK_RUNTIME=${APK_RUNTIME:-"su-exec tini libwebsockets websocket++"}
+ARG APK_INTERACTIVE=${APK_INTERACTIVE:-"nano bash tree jq"}
 
 ## security
 ARG GOSU_VERSION=${GOSU_VERSION:-"1.10"}
+
+## dependencies (yarn or npm)
+# for file in /shared/dependencies/nodejs/*
+ARG DEPENDENCY_NODEJS_EXEC=${DEPENDENCY_NODEJS_EXEC:-"yarn"}
+ARG DEPENDENCY_NODEJS_PATHS=${DEPENDENCY_NODEJS_PATHS:-"/shared/dependencies/nodejs/global /shared/dependencies/nodejs/local"}
 
 ## env variables
 ENV UID="991" \
@@ -34,12 +50,24 @@ ENV UID="991" \
 ## Install Gosu to /usr/local/bin/gosu
 ADD https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-${CONTAINER_ARCH} /usr/local/sbin/gosu
 
+COPY ./shared/dependencies/nodejs    /shared/dependencies/nodejs
+
 ## Install build and runtime dependencies
 RUN \
     chmod +x /usr/local/sbin/gosu \
         && apk add --no-cache --no-progress --update --virtual .deps.build ${APK_BUILD} \
         && apk add --no-cache --no-progress --update --virtual .deps.runtime ${APK_RUNTIME} \
         && apk add --no-cache --no-progress --update --virtual .deps.interactive ${APK_INTERACTIVE} \
+    \
+    ## Install dependencies 
+    \
+        && echo "[NODEJS] - [START] with \"${DEPENDENCY_NODEJS_EXEC}\"" \
+            && for DPP in ${DEPENDENCY_NODEJS_PATHS}; do \
+                cd ${DPP} \
+                    && ls -l \
+                        && if [ -f package.json ]; then ${DEPENDENCY_NODEJS_EXEC} install ; fi ; \
+        done \
+        && echo "[NODEJS] - [END] with \"${DEPENDENCY_NODEJS_EXEC}\"" \
     \
     ## Download Caddy
     \
@@ -66,12 +94,7 @@ COPY ./docker/internal/entrypoint.sh    /usr/bin/entrypoint.sh
 COPY ./docker/internal/nsswitch.conf    /etc/nsswitch.conf
 COPY ./shared/conf.d/caddy/Caddyfile    /shared/conf.d/caddy/Caddyfile
 
-## web content
-COPY ./shared/www/                      /shared/apps/
-
-VOLUME ["/shared/www", "/shared/conf.d/caddy", "/shared/logs/caddy"]
+VOLUME ["/shared/conf.d/caddy", "/shared/logs/caddy"]
 WORKDIR /shared
-
-EXPOSE 80 443 2015
 
 CMD ["/sbin/tini", "--", "/usr/bin/entrypoint.sh"]
