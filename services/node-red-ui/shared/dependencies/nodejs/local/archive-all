@@ -1,0 +1,8 @@
+#!/bin/sh
+set -x
+set -e
+
+clear
+echo
+
+tar zcvf ./node_modules.tar.gz ./node_modules

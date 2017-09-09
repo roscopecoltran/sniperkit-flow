@@ -1,0 +1,54 @@
+#!/bin/sh
+set -x
+set +e
+
+clear
+echo
+
+npm i --save node-red 
+npm i --save node-red-admin 
+npm i --save node-red-node-msgpack 
+npm i --save node-red-dashboard 
+npm i --save node-red-node-base64 
+npm i --save node-red-contrib-composer 
+npm i --save node-red-contrib-ui 
+npm i --save node-red-node-instagram 
+npm i --save node-red-node-google 
+
+npm i --save node-red-node-flickr 
+npm i --save node-red-node-delicious 
+npm i --save node-red-node-aws 
+npm i --save node-red-node-openweathermap 
+npm i --save node-red-auth-github 
+npm i --save node-red-auth-twitter 
+npm i --save node-red-node-swagger nanomsg 
+npm i --save node-red-dashboard 
+
+npm i --save node-red-node-watson 
+npm i --save node-red-node-wordpos 
+npm i --save node-red-node-badwords 
+npm i --save node-red-node-random 
+npm i --save node-red-node-geohash 
+npm i --save node-red-node-notify 
+npm i --save node-red-node-exif
+
+npm i --save node-red-contrib-mjpgcamera
+npm i --save node-red-contrib-darknet-yolo
+npm i --save node-red-contrib-media-utils
+npm i --save node-red-contrib-topic-timeframe-trigger
+npm i --save node-red-contrib-
+
+npm i --save https://github.com/ibmets/node-red-bluemix-nodes
+npm i --save https://github.com/tzapu/node-red-contrib-blynk-websockets
+npm i --save https://github.com/node-red/node-red-node-swagger
+npm i --save https://github.com/botmasterai/node-red-contrib-botmaster
+npm i --save https://github.com/Aietes/node-red-contrib-harmony
+npm i --save https://github.com/hardillb/node-red-contrib-alexa-home-skill
+npm i --save https://github.com/mschm/node-red-contrib-homekit
+npm i --save https://github.com/mike-marcacci/node-redlock
+npm i --save https://github.com/namgk/node-red-contrib-dnr
+npm i --save https://github.com/hardillb/node-red-node-geofence
+npm i --save https://github.com/consulthys/node-red-contrib-logstash
+npm i --save https://github.com/chameleonbr/node-red-contrib-redis
+npm i --save https://github.com/mikakaraila/node-red-contrib-modbus
+npm i --save npm i --save node-red-contrib-mjpgcamera

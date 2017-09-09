@@ -81,6 +81,8 @@ services:
     extra_hosts:
     - "dockerhost:$DOCKERHOST"
 
+  # PACKAGE_NAMES=$(USER=noflo; for PAGE in {1..5}; do curl -s "https://api.github.com/users/$USER/repos?page=$PAGE&per_page=100" ; done | grep -e '"name"' | cut -d \" -f 4 | grep -e 'noflo-*' | xargs -L1 echo | tr '\n' ' ')
+  # USER=noflo; for PAGE in {1..5}; do curl -s "https://api.github.com/users/$USER/repos?page=$PAGE&per_page=100&access_token=${GITHUB_TOKEN}" ; done | grep -e '"name": "noflo-*' | cut -d \" -f 4 | xargs -L1 npm install --save
   noflow_graph_server:
     image: noflo-graph-server:latest-alpine3.6
     container_name: noflo-graph-server
@@ -105,7 +107,7 @@ services:
     extra_hosts:
     - "dockerhost:$DOCKERHOST"
 
-  # git subtree add --prefix services/msgflo-cpp/src https://github.com/msgflo-cpp/msgflo master --squash
+  # git subtree add --prefix services/msgflo-cpp/src https://github.com/msgflo/msgflo-cpp master --squash
   msgflo_cpp:
     image: msgflo-cpp:latest-alpine3.6
     container_name: msgflo-cpp
