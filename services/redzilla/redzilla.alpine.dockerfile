@@ -28,6 +28,9 @@ ARG APK_INTERACTIVE=${APK_INTERACTIVE:-"nano bash tree jq htop"}
 ## security
 ARG GOSU_VERSION=${GOSU_VERSION:-"1.10"}
 
+## app
+ARG APP_VCS_URI=${APP_VCS_URI:-"github.com/muka/redzilla"}
+
 ## env variables
 ENV UID="991" \
     GID="991" \

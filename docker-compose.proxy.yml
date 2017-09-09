@@ -14,8 +14,6 @@ services:
     - "./shared/logs:/shared/logs"
     - "./shared/conf.d:/shared/conf.d"
 
-  # git subtree add --prefix services/traefik https://github.com/containous/traefik master --squash
-  # git subtree add --prefix services/traefik-library-image https://github.com/containous/traefik-library-image master --squash
   proxy:
     image: traefik
     # image: traefik:latest-alpine3.6

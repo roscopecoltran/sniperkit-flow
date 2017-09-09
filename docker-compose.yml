@@ -14,7 +14,8 @@ services:
     - "./shared/logs:/shared/logs"
     - "./shared/conf.d:/shared/conf.d"
 
-  # git subtree add --prefix services/redzilla https://github.com/muka/redzilla master --squash
+
+  # git subtree add --prefix services/src/redzilla https://github.com/muka/redzilla master --squash
   redzilla:
     image: opny/redzilla
     # image: redzilla:latest-alpine3.6
@@ -101,6 +102,58 @@ services:
     # - "80:80"
     # - "443:443"
     - "2015:2015"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+
+  # git subtree add --prefix services/msgflo-cpp/src https://github.com/msgflo-cpp/msgflo master --squash
+  msgflo_cpp:
+    image: msgflo-cpp:latest-alpine3.6
+    container_name: msgflo-cpp
+    build:
+      context: services/msgflo-cpp
+      dockerfile:  msgflo-cpp.alpine.dockerfile
+    env_file:
+    - "./services/msgflo-cpp/msgflo-cpp.alpine.env"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+    networks:
+    - fbp
+    volumes:
+    - data:/shared/data
+    - data:/shared/logs
+    - data:/shared/www
+    - data:/shared/conf.d
+    ports:
+    # - "80:80"
+    # - "443:443"
+    - "2015:2015"
+    - "2025:2025"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+
+  # git subtree add --prefix services/msgflo/src https://github.com/msgflo/msgflo master --squash
+  msgflo:
+    image: msgflo:latest-alpine3.6
+    container_name: msgflo
+    build:
+      context: services/msgflo
+      dockerfile: msgflo.alpine.dockerfile
+    env_file:
+    - "./services/msgflo/msgflo.alpine.env"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+    networks:
+    - fbp
+    volumes:
+    - data:/shared/data
+    - data:/shared/logs
+    - data:/shared/www
+    - data:/shared/conf.d
+    ports:
+    # - "80:80"
+    # - "443:443"
+    - "3015:3015"
+    - "3025:3025"
     extra_hosts:
     - "dockerhost:$DOCKERHOST"
 

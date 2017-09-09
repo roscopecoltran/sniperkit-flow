@@ -30,6 +30,8 @@ ARG CADDY_FEATURES=${CADDY_FEATURES:-""}
 # ARG CADDY_FEATURES=${CADDY_FEATURES:-"hook.service,http.awslambda,http.cache,http.cors,http.expires,http.git,http.gopkg,http.grpc,http.ipfilter,http.jwt,http.nobots,http.ratelimit,http.realip,http.reauth,net,tls.dns.cloudflare,tls.dns.digitalocean,tls.dns.gandi,tls.dns.googlecloud,tls.dns.linode,tls.dns.ovh,tls.dns.rackspace"}
 
 ## alpine - apk
+## build (3.6): 
+## build (edge): leveldb leveldb-dev
 ARG APK_BUILD=${APK_BUILD:-"libcap curl wget tar gzip unzip libwebsockets-dev libmagic"}
 ARG APK_RUNTIME=${APK_RUNTIME:-"su-exec tini libwebsockets websocket++"}
 ARG APK_INTERACTIVE=${APK_INTERACTIVE:-"nano bash tree jq"}

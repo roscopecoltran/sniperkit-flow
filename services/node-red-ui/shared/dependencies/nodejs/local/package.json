@@ -22,5 +22,11 @@
     "url": "https://github.com/roscopecoltran/sniperkit-flow/issues"
   },
   "homepage": "https://github.com/roscopecoltran/sniperkit-flow/tree/docker/services/node-red-ui#readme",
-  "dependencies": {}
+  "dependencies": {
+    "node-red": "^0.17.5"
+  },
+  "devDependencies": {
+    "node-red-admin": "^0.1.3",
+    "node-red-node-msgpack": "^1.0.0"
+  }
 }
