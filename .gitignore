@@ -24,3 +24,10 @@ _testmain.go
 *.prof
 
 *.log
+
+goflow.alpine.env
+
+vendor
+vendor/
+vendor/**
+
