@@ -81,6 +81,13 @@
     "noflo-liquid": "git+https://github.com/noflo/noflo-liquid.git",
     "noflo-localstorage": "git+https://github.com/noflo/noflo-localstorage.git",
     "noflo-mandrill": "git+https://github.com/noflo/noflo-mandrill.git",
-    "noflo-nodejs": "^0.8.1"
+    "noflo-markdown": "git+https://github.com/noflo/noflo-markdown.git",
+    "noflo-math": "git+https://github.com/noflo/noflo-math.git",
+    "noflo-mirobot": "git+https://github.com/noflo/noflo-mirobot.git",
+    "noflo-mqtt": "git+https://github.com/noflo/noflo-mqtt.git",
+    "noflo-nodejs": "git+https://github.com/noflo/noflo-nodejs.git",
+    "noflo-objects": "git+https://github.com/noflo/noflo-objects.git",
+    "noflo-oembed": "git+https://github.com/noflo/noflo-oembed.git",
+    "noflo-packets": "git+https://github.com/noflo/noflo-packets.git"
   }
 }

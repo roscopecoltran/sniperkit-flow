@@ -7,7 +7,10 @@ echo
 
 DIR=$(dirname "$0")
 echo "$DIR"
-. ${DIR}/common.sh
+
+if [ -f ${DIR}/common.sh ]; then
+	. ${DIR}/common.sh
+fi
 
 pwd
 

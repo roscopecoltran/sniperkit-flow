@@ -1,0 +1,29 @@
+#!/bin/sh
+set -x
+set -e
+
+clear
+echo
+
+## node-red
+git subtree add --prefix services/redzilla/src https://github.com/muka/redzilla master --squash
+
+## noflo
+
+## msg-flo
+git subtree add --prefix services/msgflo/src https://github.com/msgflo/msgflo master --squash
+git subtree add --prefix services/msgflo-cpp/src https://github.com/msgflo/msgflo-cpp master --squash
+
+## cascade fbp
+git subtree add --prefix services/src/cascades-fbp/cascades-influxdb/src https://github.com/cascades-fbp/cascades-influxdb master --squash
+git subtree add --prefix services/src/cascades-fbp/cascades-mqtt/src https://github.com/cascades-fbp/cascades-mqtt master --squash
+git subtree add --prefix services/src/cascades-fbp/cascades-websocket/src https://github.com/cascades-fbp/cascades-websocket master --squash
+git subtree add --prefix services/src/cascades-fbp/cascades-bonjour/src https://github.com/cascades-fbp/cascades-bonjour master --squash
+git subtree add --prefix services/src/cascades-fbp/cascades-sockets/src https://github.com/cascades-fbp/cascades-sockets master --squash
+git subtree add --prefix services/src/cascades-fbp/cascades-flowmaker/src https://github.com/cascades-fbp/cascades-flowmaker master --squash
+git subtree add --prefix services/src/cascades-fbp/cascades-patchwork/src https://github.com/cascades-fbp/cascades-patchwork master --squash
+git subtree add --prefix services/src/cascades-fbp/cascades-caf/src https://github.com/cascades-fbp/cascades-caf master --squash
+
+### snippets
+# PACKAGE_NAMES=$(USER=noflo; for PAGE in {1..5}; do curl -s "https://api.github.com/users/$USER/repos?page=$PAGE&per_page=100" ; done | grep -e '"name"' | cut -d \" -f 4 | grep -e 'noflo-*' | xargs -L1 echo | tr '\n' ' ')
+# USER=noflo; for PAGE in {1..5}; do curl -s "https://api.github.com/users/$USER/repos?page=$PAGE&per_page=100&access_token=${GITHUB_TOKEN}" ; done | grep -e '"name": "noflo-*' | cut -d \" -f 4 | xargs -L1 npm install --save

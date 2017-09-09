@@ -1,14 +1,8 @@
 node_modules
 node_modules/
 node_modules/**
+node_modules.tar.gz
 
 *.log
 
-global/node_modules
-global/node_modules/
-global/node_modules/**
-
-local/node_modules
-local/node_modules/
-local/node_modules/**
 

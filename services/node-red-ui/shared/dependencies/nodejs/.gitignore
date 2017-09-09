@@ -1,4 +1,8 @@
-nodejs/node_modules
-nodejs/node_modules/
-nodejs/node_modules/**
+node_modules
+node_modules/
+node_modules/**
+node_modules.tar.gz
+
 *.log
+
+
