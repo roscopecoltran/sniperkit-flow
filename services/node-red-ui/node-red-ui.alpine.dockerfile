@@ -1,7 +1,7 @@
 ## snippets ############################################################################################################
 ##
-## 1. docker build -t ryanpeach-goflow-service --no-cache -f goflow-ui.alpine.dockerfile .
-## 2. docker run --rm -p 80:80 -p 443:443 -p 2015:2015 ryanpeach-goflow-service
+## 1. docker build -t node-red-ui --no-cache -f node-red-ui.alpine.dockerfile .
+## 2. docker run --rm -p 80:80 -p 443:443 -p 2015:2015 node-red-ui
 ##
 ########################################################################################################################
 
@@ -45,7 +45,8 @@ RUN \
     \
         && mkdir -p /tmp/caddy \
         && cd /tmp/caddy \
-        && curl -o caddy.tar.gz "$CADDY_SRC_URL" \
+        && wget -nc -O caddy.tar.gz "$CADDY_SRC_URL" \
+        \
         && tar xvf /tmp/caddy/caddy.tar.gz -C /tmp/caddy \
         && mv /tmp/caddy/caddy /usr/local/bin/caddy \
     \
@@ -65,12 +66,9 @@ COPY ./docker/internal/entrypoint.sh    /usr/bin/entrypoint.sh
 COPY ./docker/internal/nsswitch.conf    /etc/nsswitch.conf
 COPY ./shared/conf.d/caddy/Caddyfile    /shared/conf.d/caddy/Caddyfile
 
-## web content
-COPY ./shared/www/                      /shared/apps/
-
-VOLUME ["/shared/www", "/shared/conf.d/caddy", "/shared/logs/caddy"]
+VOLUME ["/shared/conf.d/caddy", "/shared/logs/caddy"]
 WORKDIR /shared
 
-EXPOSE 80 443 2015
+EXPOSE 1880
 
 CMD ["/sbin/tini", "--", "/usr/bin/entrypoint.sh"]

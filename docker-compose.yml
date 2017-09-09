@@ -1,0 +1,86 @@
+---
+version: '2'
+# version: '3.2'
+# extra_hosts:
+#  - "service.localhost:172.16.123.1"
+
+services:
+
+  data:
+    image: tianon/true
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "./shared/data:/shared/data"
+    - "./shared/logs:/shared/logs"
+    - "./shared/conf.d:/shared/conf.d"
+
+  # git subtree add --prefix services/redzilla https://github.com/muka/redzilla master --squash
+  redzilla:
+    image: opny/redzilla
+    # image: redzilla:latest-alpine3.6
+    container_name: redzilla
+    networks:
+    - fbp
+    ports:
+    - "3000:3000"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - data:/shared/data
+    - data:/shared/logs
+    - data:/shared/www
+    - data:/shared/conf.d
+
+  goflow_draw:
+    image: goflow-draw:latest-alpine3.6
+    container_name: goflow-draw
+    build:
+      context: services/goflow-draw
+      dockerfile: goflow-ui.alpine.dockerfile
+    env_file:
+    - "./services/goflow-draw/goflow-ui.alpine.env"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+    networks:
+    - fbp
+    volumes:
+    - data:/shared/data
+    - data:/shared/logs
+    - data:/shared/www
+    - data:/shared/conf.d
+    ports:
+    # - "80:80"
+    # - "443:443"
+    - "2015:2015"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+
+  node_red:
+    image: node-red:latest-alpine3.6
+    container_name: node-red
+    build:
+      context: services/goflow-draw
+      dockerfile: goflow-ui.alpine.dockerfile
+    env_file:
+    - "./services/goflow-draw/goflow-ui.alpine.env"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+    networks:
+    - fbp
+    volumes:
+    - data:/shared/data
+    - data:/shared/logs
+    - data:/shared/www
+    - data:/shared/conf.d
+    ports:
+    # - "80:80"
+    # - "443:443"
+    - "2015:2015"
+    extra_hosts:
+    - "dockerhost:$DOCKERHOST"
+
+
+volumes:
+  data: 
+
