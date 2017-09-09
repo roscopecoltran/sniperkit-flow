@@ -2,32 +2,39 @@ version: '2'
 
 services:
   proxy:
-    image: traefik
+    # image: traefik:latest-alpine3.6
+    image: traefik:latest-scratch
+    build:
+      context: .
+      dockerfile: redzilla.scratch.dockerfile
     command: --web --docker --docker.watch --docker.domain=localhost --logLevel=DEBUG --entryPoints="Name:http Address::80"
     networks:
-      - redzilla
-      - webproxy
+    - redzilla
+    - webproxy
     ports:
-      - "80:80"
-      - "8080:8080"
+    - "80:80"
+    - "8080:8080"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /dev/null:/traefik.toml
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /dev/null:/traefik.toml
 
   redzilla:
-    image: opny/redzilla
+    image: redzilla:latest-alpine3.6
     container_name: redzilla
+    build:
+      context: .
+      dockerfile: redzilla.alpine.dockerfile
     networks:
-      - redzilla
+    - redzilla
     ports:
-      - "3000:3000"
+    - "3000:3000"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./data:/data
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./data:/data
     labels:
-      - "traefik.backend=redzilla"
-      - "traefik.port=3000"
-      - "traefik.frontend.entryPoints=http"
+    - "traefik.backend=redzilla"
+    - "traefik.port=3000"
+    - "traefik.frontend.entryPoints=http"
 
   #  This used to work
   # test2:

@@ -1,13 +1,15 @@
 ## snippets ############################################################################################################
 ##
-## 1. docker build -t ryanpeach-goflow:latest-alpine3.6 --no-cache -f goflow.alpine.dockerfile .
-## 2. docker run --rm -p 80:80 -p 443:443 -p 2015:2015 ryanpeach-goflow:latest-alpine3.6
+## 1. docker build -t redzilla:latest-alpine3.6 --no-cache -f redzilla.alpine.dockerfile .
+## 2. docker run --rm -p 80:80 -p 443:443 -p 2015:2015 redzilla.alpine.dockerfile
 ##
 ########################################################################################################################
 
 ## base image
 FROM alpine:3.6
 LABEL maintainer "Michalski Luc <michalski.luc@gmail.com>"
+
+EXPOSE 80 443 2015 3000 
 
 ## container - info
 ARG CONTAINER_OS=${CONTAINER_OS:-"linux"}
